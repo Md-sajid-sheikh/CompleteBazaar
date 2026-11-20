@@ -1,4 +1,7 @@
-const API_BASE_URL = (import.meta.env.VITE_API_URL || '').replace(/\/+$/, '');
+
+const API_BASE_URL = (
+  import.meta.env.VITE_API_URL || 'https://completebazaar-2.onrender.com'
+).replace(/\/+$/, '');
 
 export async function apiRequest(path, options = {}) {
   const { token, headers: requestHeaders, body, ...requestOptions } = options;
@@ -6,6 +9,7 @@ export async function apiRequest(path, options = {}) {
   headers.set('Accept', 'application/json');
 
   if (token) headers.set('Authorization', `Bearer ${token}`);
+
   if (body !== undefined && !(body instanceof FormData) && !headers.has('Content-Type')) {
     headers.set('Content-Type', 'application/json');
   }
@@ -15,6 +19,7 @@ export async function apiRequest(path, options = {}) {
     headers,
     body,
   });
+
   const responseText = await response.text();
   let data = null;
 
